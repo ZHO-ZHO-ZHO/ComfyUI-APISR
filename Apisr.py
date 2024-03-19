@@ -82,10 +82,8 @@ class APISR_Zho:
         
         if crop_for_4x:
             _, _, h, w = img_tensor.shape
-            # 确保高度是4的倍数
             if h % 4 != 0:
                 img_tensor = img_tensor[:, :, :4 * (h // 4), :]
-            # 确保宽度是4的倍数
             if w % 4 != 0:
                 img_tensor = img_tensor[:, :, :, :4 * (w // 4)]
       
@@ -96,12 +94,62 @@ class APISR_Zho:
         return (super_resolved_img_nhwc,)
 
 
+class APISR_Lterative_Zho:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "pipe": ("APISRMODEL",),
+                "image": ("IMAGE",),
+                "crop_for_4x": ("BOOLEAN", {"default": True}),
+                "dtype": (["float32", "float16"], ),
+            }
+        }
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "sr_image"
+    CATEGORY = "🔎APISR"
+                       
+    def sr_image(self, pipe, image, crop_for_4x, dtype):
+        if dtype == "float32":
+            weight_dtype = torch.float32
+        elif dtype == "float16":
+            weight_dtype = torch.float16
+        
+        pipe = pipe.to(device=device, dtype=weight_dtype)
+
+        processed_images = []
+        for img_tensor in image: 
+            img_tensor = img_tensor.to(device=device, dtype=weight_dtype).unsqueeze(0).permute(0, 3, 1, 2)
+        
+            if crop_for_4x:
+                _, _, h, w = img_tensor.shape
+                if h % 4 != 0:
+                    img_tensor = img_tensor[:, :, :4 * (h // 4), :]
+                if w % 4 != 0:
+                    img_tensor = img_tensor[:, :, :, :4 * (w // 4)]
+                    
+            with torch.no_grad():  # 确保在推理时不计算梯度，节省内存
+                super_resolved_img = pipe(img_tensor)
+
+            super_resolved_img_nhwc = super_resolved_img.permute(0, 2, 3, 1).squeeze(0)
+            
+            processed_images.append(super_resolved_img_nhwc)
+            
+        return (processed_images,)
+
+
 NODE_CLASS_MAPPINGS = {
     "APISR_ModelLoader_Zho": APISR_ModelLoader_Zho,
-    "APISR_Zho": APISR_Zho
+    "APISR_Zho": APISR_Zho,
+    "APISR_Lterative_Zho": APISR_Lterative_Zho
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "APISR_ModelLoader_Zho": "🔎APISR ModelLoader",
-    "APISR_Zho": "🔎APISR"
+    "APISR_Zho": "🔎APISR",
+    "APISR_Lterative_Zho": "🔎APISR Lterative",
 }
