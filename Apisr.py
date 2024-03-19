@@ -89,7 +89,7 @@ class APISR_Zho:
       
         super_resolved_img = pipe(img_tensor)
 
-        super_resolved_img_nhwc = super_resolved_img.permute(0, 2, 3, 1)
+        super_resolved_img_nhwc = super_resolved_img.permute(0, 2, 3, 1).cpu()
 
         return (super_resolved_img_nhwc,)
 
@@ -135,7 +135,7 @@ class APISR_Lterative_Zho:
             with torch.no_grad():  # 确保在推理时不计算梯度，节省内存
                 super_resolved_img = pipe(img_tensor)
 
-            super_resolved_img_nhwc = super_resolved_img.permute(0, 2, 3, 1).squeeze(0)
+            super_resolved_img_nhwc = super_resolved_img.permute(0, 2, 3, 1).squeeze(0).cpu()
             
             processed_images.append(super_resolved_img_nhwc)
             
