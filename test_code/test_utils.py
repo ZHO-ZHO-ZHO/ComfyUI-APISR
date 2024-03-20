@@ -156,7 +156,8 @@ def load_grl(generator_weight_PATH, scale=4):
             out_proj_type = "linear",
             conv_type = "1conv",
             upsampler = "nearest+conv",     # Change
-        ).cuda()
+        )
+        generator = generator.to(device)
 
     else:
         print("This weight is not supported")
