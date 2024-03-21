@@ -10,6 +10,7 @@ from ..architecture.grl import GRL
 from ..architecture.swinir import SwinIR
 from ..architecture.cunet import UNet_Full
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def load_rrdb(generator_weight_PATH, scale, print_options=False):  
     ''' A simpler API to load RRDB model from Real-ESRGAN
@@ -22,7 +23,7 @@ def load_rrdb(generator_weight_PATH, scale, print_options=False):
     '''  
 
     # Load the checkpoint
-    checkpoint_g = torch.load(generator_weight_PATH)
+    checkpoint_g = torch.load(generator_weight_PATH, map_location=torch.device(device))
 
     # Find the generator weight
     if 'params_ema' in checkpoint_g:
@@ -54,7 +55,7 @@ def load_rrdb(generator_weight_PATH, scale, print_options=False):
             del weight[old_key]
 
     generator.load_state_dict(weight)
-    generator = generator.eval().cuda()
+    generator = generator.to(device).eval()
 
 
     # Print options to show what kinds of setting is used
@@ -82,7 +83,7 @@ def load_cunet(generator_weight_PATH, scale, print_options=False):
         raise NotImplementedError("We only support 2x in CUNET")
 
     # Load the checkpoint
-    checkpoint_g = torch.load(generator_weight_PATH)
+    checkpoint_g = torch.load(generator_weight_PATH, map_location=torch.device(device))
 
     # Find the generator weight
     if 'model_state_dict' in checkpoint_g:
@@ -111,7 +112,7 @@ def load_cunet(generator_weight_PATH, scale, print_options=False):
             del weight[old_key]
 
     generator.load_state_dict(weight)
-    generator = generator.eval().cuda()
+    generator = generator.to(device).eval()
 
 
     # Print options to show what kinds of setting is used
@@ -133,7 +134,7 @@ def load_grl(generator_weight_PATH, scale=4):
     '''
 
     # Load the checkpoint
-    checkpoint_g = torch.load(generator_weight_PATH)
+    checkpoint_g = torch.load(generator_weight_PATH, map_location=torch.device(device))
 
      # Find the generator weight
     if 'model_state_dict' in checkpoint_g:
@@ -155,7 +156,8 @@ def load_grl(generator_weight_PATH, scale=4):
             out_proj_type = "linear",
             conv_type = "1conv",
             upsampler = "nearest+conv",     # Change
-        ).cuda()
+        )
+        generator = generator.to(device)
 
     else:
         print("This weight is not supported")
@@ -163,7 +165,7 @@ def load_grl(generator_weight_PATH, scale=4):
 
 
     generator.load_state_dict(weight)
-    generator = generator.eval().cuda()
+    generator = generator.to(device).eval()
 
 
     num_params = 0
