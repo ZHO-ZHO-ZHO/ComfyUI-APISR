@@ -17,7 +17,7 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/assets/140084057/e6deb435-d276-4726
 
 - APISR：专门用于动漫的超分模型，包含 2x 和 4x 双模型，速度飞快，效果很好
   
-- 版本：V1.1 新增支持 cpu 生成，同时支持图像和视频放大（视频分为Batch和Lterative两种方式，分别适用于高/低显存）
+- 版本：V1.1 新增支持 cpu 生成，同时支持图像和视频放大（视频分为Batch和Iterative两种方式，分别适用于高/低显存）
 
 ![Dingtalk_20240319200511](https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/assets/140084057/a6aaccf9-01e6-4c79-a9bf-6beb830e572a)
 
@@ -31,7 +31,7 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/assets/140084057/e6deb435-d276-4726
     - 同时支持 图像 和 视频
     - 批处理，帧数多的视频需要高显存
     
-- 放大（逐张）| 🔎APISR Lterative
+- 放大（逐张）| 🔎APISR Iterative
     - 同时支持 图像 和 视频
     - 逐张处理，低显存推荐使用
     - 若输出配合 Video Helper Suite 插件使用，则需要使用 ComfyUI 自带的 Split Image with Alpha 节点去除 Alpha 通道
@@ -59,7 +59,7 @@ V1.0
 
     ![Dingtalk_20240319195936](https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/assets/140084057/2dc21ac0-6ca4-45a6-8009-29f0eece7426)
 
-  - [V1.0 APISR img or video Lterative](https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/blob/main/APISR%20WORKFLOWS/APISR%20img%20or%20video%20Lterative%E3%80%90Zho%E3%80%91.json)
+  - [V1.0 APISR img or video Iterative](https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/blob/main/APISR%20WORKFLOWS/APISR%20img%20or%20video%20Iterative%E3%80%90Zho%E3%80%91.json)
     
     ![Dingtalk_20240319203321](https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR/assets/140084057/9ebc1153-2d68-4fa2-b24a-b7bb8ebe437a)
 
@@ -72,7 +72,7 @@ V1.0
 
 - 20240319
 
-  V1.0 同时支持图像与视频的放大，还提供分别适合于高显存和低显存的 Batch 和 Lterative 两种模式
+  V1.0 同时支持图像与视频的放大，还提供分别适合于高显存和低显存的 Batch 和 Iterative 两种模式
 
   创建项目
   
