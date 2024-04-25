@@ -94,7 +94,7 @@ class APISR_Zho:
         return (super_resolved_img_nhwc,)
 
 
-class APISR_Lterative_Zho:
+class APISR_Iterative_Zho:
     def __init__(self):
         pass
 
@@ -145,11 +145,11 @@ class APISR_Lterative_Zho:
 NODE_CLASS_MAPPINGS = {
     "APISR_ModelLoader_Zho": APISR_ModelLoader_Zho,
     "APISR_Zho": APISR_Zho,
-    "APISR_Lterative_Zho": APISR_Lterative_Zho
+    "APISR_Iterative_Zho": APISR_Iterative_Zho
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "APISR_ModelLoader_Zho": "🔎APISR ModelLoader",
     "APISR_Zho": "🔎APISR",
-    "APISR_Lterative_Zho": "🔎APISR Lterative",
+    "APISR_Iterative_Zho": "🔎APISR Iterative",
 }
