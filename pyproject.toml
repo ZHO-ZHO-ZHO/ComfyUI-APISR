@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-apisr"
+description = "Unofficial implementation of APISR for ComfyUI, both image and video"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["timm", "fairscale"]
+
+[project.urls]
+Repository = "https://github.com/ZHO-ZHO-ZHO/ComfyUI-APISR"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-APISR"
+Icon = ""
